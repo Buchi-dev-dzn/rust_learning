@@ -81,3 +81,8 @@ cargo studio
 ```sh
 cargo test -p studio
 ```
+
+## ライセンス
+
+[MIT License](LICENSE)。
+同梱しているサードパーティ製ライブラリ (`studio/web/vendor/` の xterm.js・CodeMirror) はそれぞれのライセンス (いずれも MIT) に従います。
