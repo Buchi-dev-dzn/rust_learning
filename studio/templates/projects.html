@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero small">
+  <h1>プロジェクト</h1>
+  <p class="lead">章で学んだことを組み合わせて、実際に使えるターミナルアプリを作ります。各プロジェクトには完成版 (<code>projects/&lt;id&gt;</code>) と、あなたが書き進める骨組み (<code>projects/&lt;id&gt;/starter</code>) があります。</p>
+</section>
+<div class="grid">
+{% for p in projects %}
+  <a class="card proj-card" href="{{ p.href }}">
+    <div class="card-kicker">{{ p.id }} · 難易度 {{ p.stars }}</div>
+    <h3>{{ p.title }}</h3>
+    <p>{{ p.summary }}</p>
+    <div class="meter"><span style="width: {% if p.steps_total > 0 %}{{ p.steps_done * 100 / p.steps_total }}{% else %}0{% endif %}%"></span></div>
+    <div class="card-foot">STEP {{ p.steps_done }}/{{ p.steps_total }} · {{ p.chapters }}{% if p.tui %}<span class="chip">TUI</span>{% endif %}</div>
+  </a>
+{% endfor %}
+</div>
+{% endblock %}

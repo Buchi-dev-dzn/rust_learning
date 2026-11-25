@@ -1,0 +1,8 @@
+[package]
+name = "f7_file_manager"
+edition.workspace = true
+version.workspace = true
+publish.workspace = true
+
+[dependencies]
+libc = { workspace = true }

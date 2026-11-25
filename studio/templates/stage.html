@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero small">
+  <div class="card-kicker">Stage {{ stage.id }} · 目安 {{ stage.hours }}</div>
+  <h1>{{ stage.title }}</h1>
+  <p class="lead">{{ stage.summary }}</p>
+  <p class="goal">🎯 到達目標: {{ stage.goal }}</p>
+  <div class="meter big"><span style="width: {{ stage.pct }}%"></span></div>
+</section>
+<h2 class="section-title">章</h2>
+<div class="grid">
+{% for c in stage.chapters %}
+  <div class="card chapter-card {% if c.complete %}done{% endif %}">
+    <div class="card-kicker">第{{ c.number }}章 · {{ c.hours }}</div>
+    <h3><a href="{{ c.href }}">{{ c.title }}</a></h3>
+    <ul class="ex-list">
+      {% for e in c.exercises %}
+      <li><a href="{{ e.href }}"><span class="status {% if e.done %}ok{% endif %}"></span>{{ e.label }} {{ e.title }}</a></li>
+      {% endfor %}
+    </ul>
+    <div class="card-foot"><a href="{{ c.href }}">解説を読む →</a>{% if c.read %}<span class="chip ok">読了</span>{% endif %}</div>
+  </div>
+{% endfor %}
+</div>
+{% if !stage.projects.is_empty() %}
+<h2 class="section-title">このステージのプロジェクト</h2>
+<div class="grid">
+{% for p in stage.projects %}
+  <a class="card" href="{{ p.href }}">
+    <div class="card-kicker">{{ p.stars }} · {{ p.chapters }}</div>
+    <h3>{{ p.title }}</h3><p>{{ p.summary }}</p>
+    <div class="card-foot">STEP {{ p.steps_done }}/{{ p.steps_total }}{% if p.tui %}<span class="chip">TUI</span>{% endif %}</div>
+  </a>
+{% endfor %}
+</div>
+{% endif %}
+{% if !stage.finals.is_empty() %}
+<h2 class="section-title">卒業課題</h2>
+<div class="grid">
+{% for f in stage.finals %}
+  <a class="card {% if f.done %}done{% endif %}" href="{{ f.href }}">
+    <div class="card-kicker">{{ f.stars }}</div>
+    <h3>{{ f.title }}</h3><p>{{ f.tech }}</p>
+    <div class="card-foot">{% if f.done %}<span class="chip ok">合格</span>{% else %}<span class="chip">未合格</span>{% endif %}</div>
+  </a>
+{% endfor %}
+</div>
+{% endif %}
+{% endblock %}

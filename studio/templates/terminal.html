@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block head %}
+<link rel="stylesheet" href="/static/vendor/xterm.css">
+<script src="/static/vendor/xterm.js"></script>
+<script src="/static/vendor/addon-fit.js"></script>
+{% endblock %}
+{% block content %}
+<div class="term-page">
+  <div class="term-bar">
+    <span class="muted">リポジトリ直下でシェルが起動します。TUI アプリはここで動かせます。</span>
+    <span class="spacer"></span>
+    <select id="preset">
+      <option value="">▶ プリセットを実行…</option>
+      {% for p in presets %}<option value="{{ p.href }}">{{ p.label }} — {{ p.href }}</option>{% endfor %}
+    </select>
+    <button class="btn tiny" id="term-restart" type="button">↻ 再起動</button>
+    <button class="btn tiny ghost" id="term-ctrlc" type="button" title="Ctrl-C を送る">^C</button>
+  </div>
+  <div id="term" class="term"></div>
+  <p class="muted small">ヒント: 本物のターミナルで動かしたいときは、同じコマンドをリポジトリ直下で実行してください。描画が崩れたら「再起動」。</p>
+</div>
+{% endblock %}
+{% block scripts %}<script>Studio.terminalPage({{ "{" }} cmd: {{ cmd|json|safe }} {{ "}" }});</script>{% endblock %}

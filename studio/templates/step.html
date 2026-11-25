@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block head %}{% include "editor_head.html" %}{% endblock %}
+{% block content %}
+<div class="doc-layout">
+  <aside class="toc">
+    <div class="toc-title"><a href="/projects/{{ proj.id }}">{{ proj.title }}</a></div>
+    <ol class="steps-nav">
+      <li><a href="/projects/{{ proj.id }}">概要</a></li>
+      {% for s in steps %}<li class="{% if s.done %}done{% endif %} {% if s.current %}current{% endif %}"><a href="{{ s.href }}">{{ s.title }}</a></li>{% endfor %}
+    </ol>
+    {% if !toc.is_empty() %}<div class="toc-title">このページ</div><ul>{% for t in toc %}<li><a href="#{{ t.0 }}">{{ t.1 }}</a></li>{% endfor %}</ul>{% endif %}
+  </aside>
+  <article class="prose">
+    <div class="card-kicker">{{ proj.title }} · STEP {{ n }} / {{ steps.len() }}</div>
+    <h1>{{ title }}</h1>
+    {{ html|safe }}
+    <section class="next-box">
+      <label class="check"><input type="checkbox" id="step-done" {% if done %}checked{% endif %} data-url="/api/projects/{{ proj.id }}/steps/{{ n }}"> この STEP を完了した</label>
+      {% if let Some(nx) = page.next %}<a class="btn primary" href="{{ nx.href }}">次の STEP へ →</a>{% else %}<a class="btn primary" href="/projects">🎉 プロジェクト完了！一覧へ</a>{% endif %}
+    </section>
+    {% include "project_tools.html" %}
+  </article>
+</div>
+{% endblock %}
+{% block scripts %}<script>Studio.toolsPage();</script>{% endblock %}

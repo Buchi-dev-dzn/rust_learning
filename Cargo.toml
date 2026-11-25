@@ -1,0 +1,36 @@
+[workspace]
+resolver = "3"
+members = [
+    "studio",
+    "projects/p01_minigrep",
+    "projects/p02_todo_cli",
+    "projects/p03_ansi_raw",
+    "projects/p04_crossterm_basics",
+    "projects/p05_editor",
+    "projects/p06_ratatui_app",
+    "projects/p07_own_tui",
+    "projects/p01_minigrep/starter",
+    "projects/p02_todo_cli/starter",
+    "projects/p03_ansi_raw/starter",
+    "projects/p04_crossterm_basics/starter",
+    "projects/p05_editor/starter",
+    "projects/p06_ratatui_app/starter",
+    "projects/p07_own_tui/starter",
+    "finals/f1_coreutils",
+    "finals/f2_ls",
+    "finals/f3_keyparser",
+    "finals/f4_diff_renderer",
+    "finals/f5_editor_core",
+    "finals/f6_sysmon",
+    "finals/f7_file_manager",
+]
+
+[workspace.package]
+edition = "2024"
+version = "0.1.0"
+publish = false
+
+[workspace.dependencies]
+crossterm = "0.29"
+ratatui = "0.30"
+libc = "0.2"

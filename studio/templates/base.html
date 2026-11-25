@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ja" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page.title }} — Rust 学習スタジオ</title>
+<script>document.documentElement.dataset.theme = localStorage.getItem('theme') || (matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');</script>
+<link rel="stylesheet" href="/static/style.css">
+<link rel="stylesheet" href="/static/vendor/codemirror.css">
+<link rel="stylesheet" href="/static/vendor/theme-material-darker.css">
+<script src="/static/vendor/codemirror.js"></script>
+<script src="/static/vendor/simple.js"></script>
+<script src="/static/vendor/rust.js"></script>
+<script src="/static/vendor/runmode.js"></script>
+{% block head %}{% endblock %}
+</head>
+<body class="{% if page.wide %}wide{% endif %}">
+<header class="topbar">
+  <a class="brand" href="/"><span class="logo">🦀</span> Rust 学習スタジオ</a>
+  <nav class="mainnav">
+    <a href="/" class="{% if page.nav == "home" %}active{% endif %}">ホーム</a>
+    <a href="/roadmap" class="{% if page.nav == "roadmap" %}active{% endif %}">ロードマップ</a>
+    <a href="/lessons" class="{% if page.nav == "lessons" %}active{% endif %}">解説</a>
+    <a href="/exercises" class="{% if page.nav == "exercises" %}active{% endif %}">演習</a>
+    <a href="/projects" class="{% if page.nav == "projects" %}active{% endif %}">プロジェクト</a>
+    <a href="/final" class="{% if page.nav == "final" %}active{% endif %}">卒業課題</a>
+    <a href="/terminal" class="{% if page.nav == "terminal" %}active{% endif %}">ターミナル</a>
+    <a href="/reference" class="{% if page.nav == "reference" %}active{% endif %}">早見表</a>
+    <a href="/progress" class="{% if page.nav == "progress" %}active{% endif %}">進捗</a>
+  </nav>
+  <div class="topright">
+    <a class="navpct" href="/progress" title="全体の進捗"><span class="bar"><span style="width: {{ page.pct }}%"></span></span>{{ page.pct }}%</a>
+    <button id="theme-toggle" class="btn tiny ghost" type="button" title="テーマ切替">◐</button>
+  </div>
+</header>
+{% if !page.crumbs.is_empty() %}
+<div class="subbar">
+  <nav class="crumbs">
+    {% for c in page.crumbs %}{% if !loop.first %}<span class="sep">›</span>{% endif %}<a href="{{ c.href }}">{{ c.label }}</a>{% endfor %}
+  </nav>
+  <div class="pager">
+    {% if let Some(p) = page.prev %}<a class="btn tiny ghost" href="{{ p.href }}" title="{{ p.label }}">← 前へ</a>{% endif %}
+    {% if let Some(n) = page.next %}<a class="btn tiny ghost" href="{{ n.href }}" title="{{ n.label }}">次へ →</a>{% endif %}
+  </div>
+</div>
+{% endif %}
+<main class="main">
+{% block content %}{% endblock %}
+</main>
+{% if !page.wide %}
+<footer class="foot">
+  {% if let Some(p) = page.prev %}<a class="foot-prev" href="{{ p.href }}"><small>前へ</small>{{ p.label }}</a>{% else %}<span></span>{% endif %}
+  {% if let Some(n) = page.next %}<a class="foot-next" href="{{ n.href }}"><small>次へ</small>{{ n.label }}</a>{% endif %}
+</footer>
+{% endif %}
+<script src="/static/app.js"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

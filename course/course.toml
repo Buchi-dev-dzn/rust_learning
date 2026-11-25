@@ -1,0 +1,262 @@
+# 学習サイト (studio) が読み込むコース定義。
+# 演習ファイルは course/exercises/<chapter>/*.rs から自動検出される (ファイル名順)。
+
+[[stage]]
+id = 1
+title = "基礎"
+summary = "Rust の文法と、Rust 最大の特徴である所有権・借用を身につける。"
+goal = "小さな関数・構造体・enum を使ったプログラムを、コンパイラと会話しながら書ける"
+hours = "15〜25 時間"
+chapters = ["01_basics", "02_ownership", "03_borrowing", "04_structs", "05_enums", "06_collections", "07_errors", "08_modules"]
+projects = ["p01_minigrep", "p02_todo_cli"]
+
+[[stage]]
+id = 2
+title = "中級"
+summary = "トレイト・ジェネリクス・ライフタイム・イテレータ・スマートポインタ・並行処理。"
+goal = "再利用可能な抽象を設計し、スレッドとチャネルで並行処理を書ける"
+hours = "20〜30 時間"
+chapters = ["09_traits", "10_lifetimes", "11_iterators", "12_smart_pointers", "13_testing", "14_concurrency"]
+projects = []
+
+[[stage]]
+id = 3
+title = "システム / CLI"
+summary = "標準入出力・ファイル・引数・終了コード、そして Unicode 文字列の表示幅。"
+goal = "Unix 流儀の CLI ツールを標準ライブラリだけで作れる"
+hours = "10〜15 時間"
+chapters = ["15_io_cli", "16_unicode"]
+projects = []
+
+[[stage]]
+id = 4
+title = "ターミナル / TUI"
+summary = "ANSI エスケープ、raw モード、crossterm、TUI アーキテクチャ、ratatui、そして自作フレームワーク。"
+goal = "ターミナルの仕組みを理解し、ライブラリあり/なしの両方で TUI アプリを作れる"
+hours = "30〜50 時間"
+chapters = ["17_ansi", "18_raw_input", "19_crossterm", "20_tui_architecture", "21_ratatui", "22_own_tui"]
+projects = ["p03_ansi_raw", "p04_crossterm_basics", "p05_editor", "p06_ratatui_app", "p07_own_tui"]
+
+[[stage]]
+id = 5
+title = "卒業課題"
+summary = "仕様書と受け入れテストだけを頼りに、ターミナルアプリを一から作る総合演習。"
+goal = "ターミナル関係のアプリを自力で設計・実装・テストできる"
+hours = "40 時間〜"
+chapters = ["23_final"]
+projects = []
+
+# ---------------------------------------------------------------- chapters
+[[chapter]]
+id = "01_basics"
+title = "変数・型・関数・制御フロー"
+hours = "2〜3 時間"
+[[chapter]]
+id = "02_ownership"
+title = "所有権 (move / clone / Copy)"
+hours = "2〜3 時間"
+[[chapter]]
+id = "03_borrowing"
+title = "借用と参照・スライス"
+hours = "2〜3 時間"
+[[chapter]]
+id = "04_structs"
+title = "構造体とメソッド"
+hours = "1〜2 時間"
+[[chapter]]
+id = "05_enums"
+title = "enum とパターンマッチ / Option"
+hours = "2 時間"
+[[chapter]]
+id = "06_collections"
+title = "コレクション (Vec, String, HashMap)"
+hours = "2〜3 時間"
+[[chapter]]
+id = "07_errors"
+title = "エラー処理 (Result, ?, 独自エラー型)"
+hours = "2〜3 時間"
+[[chapter]]
+id = "08_modules"
+title = "モジュールとクレート、Cargo"
+hours = "1〜2 時間"
+[[chapter]]
+id = "09_traits"
+title = "トレイトとジェネリクス"
+hours = "3〜4 時間"
+[[chapter]]
+id = "10_lifetimes"
+title = "ライフタイム"
+hours = "2〜3 時間"
+[[chapter]]
+id = "11_iterators"
+title = "クロージャとイテレータ"
+hours = "3 時間"
+[[chapter]]
+id = "12_smart_pointers"
+title = "スマートポインタ (Box, Rc, RefCell)"
+hours = "3 時間"
+[[chapter]]
+id = "13_testing"
+title = "テストの書き方"
+hours = "1〜2 時間"
+[[chapter]]
+id = "14_concurrency"
+title = "並行処理 (thread, channel, Arc/Mutex)"
+hours = "3〜4 時間"
+[[chapter]]
+id = "15_io_cli"
+title = "std::io・ファイル・引数・環境変数・終了コード"
+hours = "3 時間"
+[[chapter]]
+id = "16_unicode"
+title = "文字列と Unicode の表示幅"
+hours = "2 時間"
+[[chapter]]
+id = "17_ansi"
+title = "ターミナルの仕組みと ANSI エスケープシーケンス"
+hours = "3 時間"
+[[chapter]]
+id = "18_raw_input"
+title = "raw モードとキー入力の解析"
+hours = "3〜4 時間"
+[[chapter]]
+id = "19_crossterm"
+title = "crossterm: イベント・代替スクリーン・後片付け"
+hours = "3 時間"
+[[chapter]]
+id = "20_tui_architecture"
+title = "TUI アーキテクチャ (イベントループ / 状態 / 描画)"
+hours = "3 時間"
+[[chapter]]
+id = "21_ratatui"
+title = "ratatui: Layout・Widget・StatefulWidget"
+hours = "4 時間"
+[[chapter]]
+id = "22_own_tui"
+title = "自作 TUI フレームワーク (セルバッファ・差分描画・レイアウト)"
+hours = "5 時間"
+[[chapter]]
+id = "23_final"
+title = "卒業課題の進め方"
+hours = "-"
+
+# ---------------------------------------------------------------- projects
+[[project]]
+id = "p01_minigrep"
+title = "minigrep: 自作 grep"
+difficulty = 1
+chapters = ["07_errors", "15_io_cli"]
+summary = "コマンドライン引数とファイル読み込み、Result によるエラー処理、テスト。"
+run = "cargo run -p p01_minigrep -- fn projects/p01_minigrep/src/lib.rs"
+tui = false
+
+[[project]]
+id = "p02_todo_cli"
+title = "todo: サブコマンド付き CLI"
+difficulty = 2
+chapters = ["06_collections", "07_errors", "15_io_cli"]
+summary = "サブコマンド解析を自作し、ファイルに永続化する ToDo 管理ツール。"
+run = "cargo run -p p02_todo_cli -- list"
+tui = false
+
+[[project]]
+id = "p03_ansi_raw"
+title = "ansi_raw: ライブラリなしでターミナル制御"
+difficulty = 3
+chapters = ["17_ansi", "18_raw_input"]
+summary = "ANSI を直接書き、libc の termios で raw モードに入り、キー入力を自分で解析する。"
+run = "cargo run -p p03_ansi_raw"
+tui = true
+
+[[project]]
+id = "p04_crossterm_basics"
+title = "crossterm 入門: イベントループ"
+difficulty = 3
+chapters = ["19_crossterm", "20_tui_architecture"]
+summary = "代替スクリーン・イベント・リサイズ・パニック時の後片付けを crossterm で。"
+run = "cargo run -p p04_crossterm_basics"
+tui = true
+
+[[project]]
+id = "p05_editor"
+title = "kilo 風テキストエディタ"
+difficulty = 4
+chapters = ["16_unicode", "19_crossterm", "20_tui_architecture"]
+summary = "行バッファ・スクロール・保存・検索を持つ小さなエディタを作る。"
+run = "cargo run -p p05_editor -- README.md"
+tui = true
+
+[[project]]
+id = "p06_ratatui_app"
+title = "ratatui でファイルエクスプローラ"
+difficulty = 4
+chapters = ["21_ratatui"]
+summary = "Layout・List・Paragraph・StatefulWidget を組み合わせた 2 ペインのファイルブラウザ。"
+run = "cargo run -p p06_ratatui_app"
+tui = true
+
+[[project]]
+id = "p07_own_tui"
+title = "自作 TUI フレームワーク"
+difficulty = 5
+chapters = ["22_own_tui"]
+summary = "セルバッファ・差分描画・Widget トレイト・レイアウトを自作し、その上でアプリを動かす。"
+run = "cargo run -p p07_own_tui"
+tui = true
+
+# ---------------------------------------------------------------- finals (Stage 5)
+[[final]]
+id = "f1_coreutils"
+title = "F1: wc / cat / head を自作"
+difficulty = 2
+tech = "std::io, 引数解析"
+tested = "出力・終了コード"
+tui = false
+
+[[final]]
+id = "f2_ls"
+title = "F2: カラー対応の ls"
+difficulty = 3
+tech = "fs, Unicode 表示幅, ANSI"
+tested = "整形ロジック"
+tui = false
+
+[[final]]
+id = "f3_keyparser"
+title = "F3: キー入力パーサ"
+difficulty = 3
+tech = "バイト列解析, エスケープシーケンス"
+tested = "パーサ"
+tui = true
+
+[[final]]
+id = "f4_diff_renderer"
+title = "F4: 差分レンダラ"
+difficulty = 4
+tech = "セルバッファ設計, ANSI"
+tested = "生成シーケンス"
+tui = true
+
+[[final]]
+id = "f5_editor_core"
+title = "F5: エディタのコア"
+difficulty = 4
+tech = "データ構造, Undo"
+tested = "編集操作"
+tui = false
+
+[[final]]
+id = "f6_sysmon"
+title = "F6: htop 風システムモニタ (ratatui)"
+difficulty = 5
+tech = "スレッド, イベントループ, ratatui"
+tested = "状態更新ロジック"
+tui = true
+
+[[final]]
+id = "f7_file_manager"
+title = "F7: 自作フレームワークでファイルマネージャ"
+difficulty = 5
+tech = "Stage4 のすべて"
+tested = "ウィジェット / レイアウト"
+tui = true

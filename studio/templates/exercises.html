@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero small">
+  <h1>演習</h1>
+  <p class="lead">合格 {{ done }} / {{ total }}。テストがすべて通れば合格です。</p>
+  <div class="filters">
+    <button class="btn tiny active" data-filter="all">すべて</button>
+    <button class="btn tiny" data-filter="todo">未合格</button>
+    <button class="btn tiny" data-filter="done">合格済み</button>
+  </div>
+</section>
+{% for s in stages %}
+<h2 class="section-title">Stage {{ s.id }}: {{ s.title }}</h2>
+{% for c in s.chapters %}
+<h3 class="chapter-head"><a href="{{ c.href }}">第{{ c.number }}章 {{ c.title }}</a> <span class="muted">{{ c.ex_done }}/{{ c.ex_total }}</span></h3>
+<div class="grid ex-grid">
+  {% for e in c.exercises %}
+  <a class="card ex-card {% if e.done %}done{% endif %}" data-done="{% if e.done %}1{% else %}0{% endif %}" href="{{ e.href }}">
+    <div class="card-kicker">演習 {{ e.label }}</div>
+    <h4>{{ e.title }}</h4>
+    <div class="card-foot">{% if e.done %}<span class="chip ok">✅ 合格</span>{% else %}<span class="chip">⏳ 未合格</span>{% endif %}</div>
+  </a>
+  {% endfor %}
+</div>
+{% endfor %}
+{% endfor %}
+{% endblock %}
+{% block scripts %}<script>
+document.querySelectorAll('[data-filter]').forEach(b => b.onclick = () => {
+  document.querySelectorAll('[data-filter]').forEach(x => x.classList.toggle('active', x === b));
+  const f = b.dataset.filter;
+  document.querySelectorAll('.ex-card').forEach(c => {
+    c.hidden = (f === 'todo' && c.dataset.done === '1') || (f === 'done' && c.dataset.done === '0');
+  });
+});
+</script>{% endblock %}

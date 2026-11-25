@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block head %}{% include "editor_head.html" %}{% endblock %}
+{% block content %}
+<div class="workbench final">
+  <section class="task">
+    <div class="card-kicker">{{ f.id }} · 難易度 {{ f.stars }} · {{ f.tech }}</div>
+    <h1>{{ f.title }} <span id="ex-status" class="chip {% if f.done %}ok{% endif %}">{% if f.done %}✅ 合格済み{% else %}⏳ 未合格{% endif %}</span></h1>
+    <nav class="mini-toc">{% for t in toc %}<a href="#{{ t.0 }}">{{ t.1 }}</a>{% endfor %}</nav>
+    <div class="prose">{{ spec|safe }}</div>
+    {% if !hints.is_empty() %}
+    <section class="hints">
+      <h2>💡 ヒント</h2>
+      {% for h in hints %}
+      <details class="hint" {% if !loop.first %}hidden{% endif %}><summary>ヒント {{ loop.index }}</summary><div class="prose">{{ h|safe }}</div></details>
+      {% endfor %}
+      <button class="btn tiny ghost" id="more-hint" type="button">次のヒントを出す</button>
+    </section>
+    {% endif %}
+    <section class="links">
+      {% if has_solution %}<a class="btn ghost" id="solution-link" href="/final/{{ f.id }}/solution">🔑 模範解答を見る</a>{% endif %}
+    </section>
+  </section>
+  <section class="ide">
+    <div class="ide-bar">
+      <select id="file-select">{% for p in files %}<option value="{{ p }}">{{ p }}</option>{% endfor %}</select>
+      <span id="dirty" class="dirty" hidden>● 未保存</span>
+      <span class="spacer"></span>
+      <button class="btn tiny ghost" id="btn-reset" type="button" title="src/ を初期状態に戻す">↺ リセット</button>
+      <button class="btn tiny" id="btn-save" type="button">保存</button>
+      <button class="btn tiny" id="btn-build" type="button">ビルド</button>
+      <button class="btn tiny primary" id="btn-test" type="button">▶ 受け入れテスト</button>
+      {% if f.tui %}<a class="btn tiny" href="/terminal?cmd={{ "cargo run -p "|urlencode }}{{ f.id|urlencode }}">▶ ターミナルで実行</a>{% endif %}
+    </div>
+    <div class="editor-wrap"><textarea id="code" spellcheck="false"></textarea></div>
+    <div class="out-bar"><span>出力</span><span class="spacer"></span><label class="muted"><input type="checkbox" id="auto"> ファイル変更時に自動テスト</label></div>
+    <pre id="output" class="output"><span class="muted">▶ 受け入れテスト で <code>cargo test -p {{ f.id }}</code> を実行します。初回は依存クレートのビルドに時間がかかります。</span></pre>
+  </section>
+</div>
+<div id="pass-banner" class="pass-banner" hidden>
+  <div>🎉 合格！</div>
+  {% if let Some(n) = page.next %}<a class="btn primary" href="{{ n.href }}">次の課題へ: {{ n.label }} →</a>{% else %}<a class="btn primary" href="/progress">🏆 全課題クリア！進捗を見る</a>{% endif %}
+  <button class="btn ghost tiny" type="button" onclick="this.parentNode.hidden=true">閉じる</button>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+Studio.finalPage({ id: "{{ f.id }}" });
+</script>
+{% endblock %}

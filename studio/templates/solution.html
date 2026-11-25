@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block head %}{% include "editor_head.html" %}{% endblock %}
+{% block content %}
+<section class="hero small">
+  <div class="card-kicker">演習 {{ ex.label }}</div>
+  <h1>模範解答: {{ ex.title }}</h1>
+  <p class="lead">答えは一つではありません。テストが通れば、あなたの解答も正解です。違いを見比べてみましょう。</p>
+  <div class="tabs" id="sol-tabs">
+    <button class="btn tiny active" data-tab="solution">模範解答</button>
+    <button class="btn tiny" data-tab="diff">自分のコードとの差分</button>
+    <a class="btn tiny ghost" href="/exercises/{{ ex.id }}">← 演習に戻る</a>
+  </div>
+</section>
+<div id="tab-solution"><textarea class="readonly-code" data-readonly="1">{{ solution }}</textarea></div>
+<div id="tab-diff" hidden><pre class="diff" id="diff"></pre></div>
+<textarea id="mine" hidden>{{ mine }}</textarea>
+<textarea id="sol" hidden>{{ solution }}</textarea>
+{% endblock %}
+{% block scripts %}<script>Studio.solutionPage();</script>{% endblock %}

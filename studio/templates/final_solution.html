@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block head %}{% include "editor_head.html" %}{% endblock %}
+{% block content %}
+<section class="hero small">
+  <h1>模範解答: {{ f.title }}</h1>
+  <p class="lead">一例です。設計の違いを比べてみましょう。<a href="/final/{{ f.id }}">← 課題に戻る</a></p>
+</section>
+{% for s in files %}
+<h3 class="file-head">{{ s.path }}</h3>
+<textarea class="readonly-code" data-readonly="1">{{ s.code }}</textarea>
+{% endfor %}
+{% endblock %}
+{% block scripts %}<script>Studio.readonlyCode();</script>{% endblock %}

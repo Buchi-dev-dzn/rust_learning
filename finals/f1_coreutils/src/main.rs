@@ -1,0 +1,15 @@
+// main は薄く保つ: 本物の標準入出力を run に渡し、戻り値を終了コードにするだけ。
+// (このファイルは完成している。ロジックは lib.rs に書く)
+fn main() {
+    let args: Vec<String> = std::env::args().skip(1).collect();
+    let stdin = std::io::stdin();
+    let stdout = std::io::stdout();
+    let stderr = std::io::stderr();
+    let code = f1_coreutils::run(
+        &args,
+        &mut stdin.lock(),
+        &mut stdout.lock(),
+        &mut stderr.lock(),
+    );
+    std::process::exit(code);
+}

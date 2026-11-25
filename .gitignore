@@ -1,0 +1,9 @@
+/target
+/.studio
+.DS_Store
+*.swp
+/todo.txt
+
+# 学習者ごとのローカル状態 (初回起動時に自動生成)
+/exercises/
+/progress.json

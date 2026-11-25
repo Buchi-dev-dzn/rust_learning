@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block head %}{% include "editor_head.html" %}{% endblock %}
+{% block content %}
+<div class="doc-layout">
+  <aside class="toc">
+    <div class="toc-title">{{ proj.title }}</div>
+    <ol class="steps-nav">
+      <li class="current"><a href="/projects/{{ proj.id }}">概要</a></li>
+      {% for s in steps %}<li class="{% if s.done %}done{% endif %}"><a href="{{ s.href }}">{{ s.title }}</a></li>{% endfor %}
+    </ol>
+  </aside>
+  <article class="prose">
+    <div class="card-kicker">{{ proj.id }} · 難易度 {{ proj.stars }} · {{ proj.chapters }}</div>
+    <h1>{{ proj.title }}</h1>
+    <p class="lead">{{ proj.summary }}</p>
+    {{ intro|safe }}
+    {% if !steps.is_empty() %}
+    <section class="next-box">
+      <h2>STEP 一覧</h2>
+      <ol class="ex-list big">
+        {% for s in steps %}<li><a href="{{ s.href }}"><span class="status {% if s.done %}ok{% endif %}"></span>{{ s.title }}</a></li>{% endfor %}
+      </ol>
+      <a class="btn primary" href="{{ steps[0].href }}">STEP 1 から始める →</a>
+    </section>
+    {% endif %}
+    {% include "project_tools.html" %}
+  </article>
+</div>
+{% endblock %}
+{% block scripts %}<script>Studio.toolsPage();</script>{% endblock %}

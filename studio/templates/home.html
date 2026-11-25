@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Rust で、ターミナルアプリを<br>全部自作できるようになる。</h1>
+    <p class="lead">文法 → 所有権 → 並行処理 → ANSI / raw モード → crossterm / ratatui → 自作 TUI フレームワーク。<br>解説を読み、ブラウザで演習を解き、プロジェクトを作り、卒業課題に挑む。</p>
+    <div class="actions">
+      {% if let Some(n) = next %}
+        <a class="btn primary big" href="{{ n.href }}">▶ 続きから再開: 演習 {{ n.label }} {{ n.title }}</a>
+      {% else %}
+        <a class="btn primary big" href="/final">🏁 卒業課題へ</a>
+      {% endif %}
+      <a class="btn big ghost" href="/roadmap">ロードマップを見る</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="ring" style="--p: {{ page.pct }}"><span>{{ page.pct }}%</span></div>
+    <ul>
+      <li>演習 <b>{{ ex_done }}</b> / {{ ex_total }}</li>
+      <li>卒業課題 <b>{{ finals_done }}</b> / {{ finals_total }}</li>
+    </ul>
+  </div>
+</section>
+
+<h2 class="section-title">ステージ</h2>
+<div class="grid stages">
+{% for s in stages %}
+  <a class="card stage-card" href="{{ s.href }}">
+    <div class="card-kicker">Stage {{ s.id }} · {{ s.hours }}</div>
+    <h3>{{ s.title }}</h3>
+    <p>{{ s.summary }}</p>
+    <div class="meter"><span style="width: {{ s.pct }}%"></span></div>
+    <div class="card-foot">{{ s.chapters.len() }} 章{% if !s.projects.is_empty() %} · プロジェクト {{ s.projects.len() }}{% endif %}{% if !s.finals.is_empty() %} · 課題 {{ s.finals.len() }}{% endif %}<span class="spacer"></span>{{ s.pct }}%</div>
+  </a>
+{% endfor %}
+</div>
+
+<div class="two-col">
+  <section>
+    <h2 class="section-title">使い方</h2>
+    <ol class="howto">
+      <li><b>解説</b>を読む。コード例は <span class="kbd">▶ 実行</span> でその場で動く。</li>
+      <li><b>演習</b>ページで TODO を埋めて <span class="kbd">▶ テスト</span>。VS Code などで <code>exercises/</code> を直接編集しても自動でテストされる。</li>
+      <li>各ステージの<b>プロジェクト</b>を STEP ごとに作る。TUI は <b>ターミナル</b>ページでブラウザ内実行できる。</li>
+      <li>最後に Stage 5 の<b>卒業課題</b>。仕様書と受け入れテストだけで作り切る。</li>
+    </ol>
+  </section>
+  <section>
+    <h2 class="section-title">最近の結果</h2>
+    {% if history.is_empty() %}
+      <p class="muted">まだ実行履歴はありません。</p>
+    {% else %}
+    <ul class="history">
+      {% for h in history %}
+      <li><span class="badge {% if h.ok %}ok{% else %}ng{% endif %}">{% if h.ok %}合格{% else %}不合格{% endif %}</span><a href="{{ h.href }}">{{ h.label }}</a><time data-ts="{{ h.at }}"></time></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block head %}{% include "editor_head.html" %}{% endblock %}
+{% block content %}
+<div class="workbench">
+  <section class="task">
+    <div class="card-kicker">演習 {{ ex.label }} · <a href="{{ chapter_href }}">{{ chapter_label }}</a></div>
+    <h1>{{ ex.title }} <span id="ex-status" class="chip {% if ex.done %}ok{% endif %}">{% if ex.done %}✅ 合格済み{% else %}⏳ 未合格{% endif %}</span></h1>
+    <div class="prose">{{ description|safe }}</div>
+    <div class="howto-box">
+      <b>進め方</b>: 右のエディタで <code>TODO</code> を直し <span class="kbd">▶ テスト</span> (<span class="kbd">Ctrl/⌘ + Enter</span>)。
+      保存 (<span class="kbd">Ctrl/⌘ + S</span>) すると <code>{{ file }}</code> に書き込まれます。VS Code などで直接編集しても自動でテストされます。
+    </div>
+    {% if !hints.is_empty() %}
+    <section class="hints" data-count="{{ hints.len() }}">
+      <h2>💡 ヒント</h2>
+      {% for h in hints %}
+      <details class="hint" {% if !loop.first %}hidden{% endif %}>
+        <summary>ヒント {{ loop.index }}</summary>
+        <div class="prose">{{ h|safe }}</div>
+      </details>
+      {% endfor %}
+      <button class="btn tiny ghost" id="more-hint" type="button">次のヒントを出す</button>
+    </section>
+    {% endif %}
+    <section class="links">
+      <a class="btn ghost" href="{{ chapter_href }}">📖 解説に戻る</a>
+      {% if has_solution %}<a class="btn ghost" id="solution-link" href="/exercises/{{ ex.id }}/solution">🔑 模範解答を見る</a>{% endif %}
+    </section>
+  </section>
+  <section class="ide">
+    <div class="ide-bar">
+      <span class="file">{{ file }}</span><span id="dirty" class="dirty" hidden>● 未保存</span>
+      <span class="spacer"></span>
+      <button class="btn tiny ghost" id="btn-reset" type="button">↺ リセット</button>
+      <button class="btn tiny" id="btn-save" type="button">保存</button>
+      <button class="btn tiny primary" id="btn-test" type="button">▶ テスト</button>
+    </div>
+    <div class="editor-wrap"><textarea id="code" spellcheck="false">{{ code }}</textarea></div>
+    <div class="out-bar"><span>出力</span><span class="spacer"></span><label class="muted"><input type="checkbox" id="auto" checked> ファイル変更時に自動テスト</label></div>
+    <pre id="output" class="output"><span class="muted">▶ テスト を押すと、ここにコンパイル結果とテスト結果が表示されます。</span></pre>
+  </section>
+</div>
+<div id="pass-banner" class="pass-banner" hidden>
+  <div>🎉 合格！</div>
+  {% if let Some(n) = page.next %}<a class="btn primary" href="{{ n.href }}">次の演習へ: {{ n.label }} →</a>{% else %}<a class="btn primary" href="/projects">プロジェクトへ →</a>{% endif %}
+  <button class="btn ghost tiny" type="button" onclick="this.parentNode.hidden=true">閉じる</button>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+Studio.exercisePage({
+  id: "{{ ex.id }}",
+  file: "{{ file }}",
+  testUrl: "/api/exercises/{{ ex.id }}/test",
+  sourceUrl: "/api/exercises/{{ ex.id }}/source",
+  resetUrl: "/api/exercises/{{ ex.id }}/reset",
+});
+</script>
+{% endblock %}

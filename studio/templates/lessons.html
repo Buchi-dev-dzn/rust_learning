@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero small"><h1>解説</h1><p class="lead">章ごとの読み物。読み終えたら各章の演習へ。</p></section>
+{% for s in stages %}
+<h2 class="section-title"><a href="{{ s.href }}">Stage {{ s.id }}: {{ s.title }}</a></h2>
+<ul class="lesson-index">
+  {% for c in s.chapters %}
+  <li class="{% if c.read %}read{% endif %}"><a href="{{ c.href }}"><span class="num">{{ c.number }}</span>{{ c.title }}</a><span class="muted">{{ c.hours }}</span>{% if c.read %}<span class="chip ok">読了</span>{% endif %}{% if c.ex_total > 0 %}<span class="chip">演習 {{ c.ex_done }}/{{ c.ex_total }}</span>{% endif %}</li>
+  {% endfor %}
+</ul>
+{% endfor %}
+{% endblock %}

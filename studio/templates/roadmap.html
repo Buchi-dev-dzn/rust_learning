@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero small">
+  <h1>ロードマップ</h1>
+  <p class="lead">上から順に進めれば、最後にはライブラリなしでも TUI を作れる状態になります。</p>
+</section>
+<ol class="road">
+{% for s in stages %}
+  <li class="road-stage">
+    <div class="road-node">{{ s.id }}</div>
+    <div class="road-body">
+      <a href="{{ s.href }}"><h2>Stage {{ s.id }}: {{ s.title }}</h2></a>
+      <p>{{ s.summary }}</p>
+      <p class="goal">🎯 到達目標: {{ s.goal }} <span class="muted">(目安 {{ s.hours }})</span></p>
+      <div class="meter"><span style="width: {{ s.pct }}%"></span></div>
+      <ul class="road-chapters">
+        {% for c in s.chapters %}
+        <li class="{% if c.complete %}done{% endif %}">
+          <a href="{{ c.href }}"><span class="num">{{ c.number }}</span>{{ c.title }}</a>
+          <span class="muted">{{ c.hours }}</span>
+          {% if c.ex_total > 0 %}<span class="chip">演習 {{ c.ex_done }}/{{ c.ex_total }}</span>{% endif %}
+          {% if c.read %}<span class="chip ok">読了</span>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      {% if !s.projects.is_empty() %}
+      <div class="road-projects">
+        {% for p in s.projects %}<a class="chip proj" href="{{ p.href }}">🛠 {{ p.title }}</a>{% endfor %}
+      </div>
+      {% endif %}
+      {% if !s.finals.is_empty() %}
+      <div class="road-projects">
+        {% for f in s.finals %}<a class="chip proj {% if f.done %}ok{% endif %}" href="{{ f.href }}">🏁 {{ f.title }}</a>{% endfor %}
+      </div>
+      {% endif %}
+    </div>
+  </li>
+{% endfor %}
+</ol>
+{% endblock %}

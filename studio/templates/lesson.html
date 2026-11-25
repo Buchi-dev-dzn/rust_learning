@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="doc-layout">
+  <aside class="toc">
+    <div class="toc-title">{{ stage_title }}</div>
+    <div class="toc-chapter">第{{ chapter.number }}章</div>
+    <ul>{% for t in toc %}<li><a href="#{{ t.0 }}">{{ t.1 }}</a></li>{% endfor %}</ul>
+  </aside>
+  <article class="prose">
+    <div class="card-kicker">第{{ chapter.number }}章 · 目安 {{ chapter.hours }}</div>
+    <h1>{{ chapter.title }}</h1>
+    {% if missing %}<p class="muted">解説は準備中です。</p>{% endif %}
+    {{ html|safe }}
+    {% if !chapter.exercises.is_empty() %}
+    <section class="next-box">
+      <h2>この章の演習</h2>
+      <ul class="ex-list big">
+        {% for e in chapter.exercises %}
+        <li><a href="{{ e.href }}"><span class="status {% if e.done %}ok{% endif %}"></span>演習 {{ e.label }}: {{ e.title }}</a></li>
+        {% endfor %}
+      </ul>
+      <a class="btn primary" href="{{ chapter.exercises[0].href }}">演習を始める →</a>
+    </section>
+    {% endif %}
+  </article>
+</div>
+{% endblock %}

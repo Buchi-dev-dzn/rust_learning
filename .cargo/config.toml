@@ -1,0 +1,3 @@
+[alias]
+# `cargo studio` で学習サイトを起動 → http://127.0.0.1:7878
+studio = "run --release -p studio --"

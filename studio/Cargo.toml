@@ -1,0 +1,20 @@
+[package]
+name = "studio"
+description = "Rust 学習サイト (localhost で動く学習環境)"
+edition.workspace = true
+version.workspace = true
+publish.workspace = true
+
+[dependencies]
+askama = { version = "0.14", features = ["serde_json"] }
+axum = { version = "0.8", features = ["ws"] }
+bytes = "1"
+futures-util = "0.3"
+portable-pty = "0.9"
+pulldown-cmark = { version = "0.13", default-features = false, features = ["html"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["full"] }
+tokio-stream = { version = "0.1", features = ["sync"] }
+toml = "0.8"
+tower-http = { version = "0.6", features = ["fs"] }

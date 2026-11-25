@@ -1,0 +1,8 @@
+[package]
+name = "f2_ls"
+edition.workspace = true
+version.workspace = true
+publish.workspace = true
+
+[dependencies]
+libc = { workspace = true }

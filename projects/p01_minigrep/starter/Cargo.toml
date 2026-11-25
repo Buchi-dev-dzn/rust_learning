@@ -1,0 +1,7 @@
+[package]
+name = "p01_minigrep_starter"
+edition.workspace = true
+version.workspace = true
+publish.workspace = true
+
+[dependencies]

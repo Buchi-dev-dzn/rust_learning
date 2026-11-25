@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="doc-layout">
+  <aside class="toc"><div class="toc-title">{{ page.title }}</div><ul>{% for t in toc %}<li><a href="#{{ t.0 }}">{{ t.1 }}</a></li>{% endfor %}</ul></aside>
+  <article class="prose"><h1>{{ page.title }}</h1>{{ html|safe }}</article>
+</div>
+{% endblock %}

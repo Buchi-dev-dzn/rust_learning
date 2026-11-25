@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero small">
+  <div class="card-kicker">Stage 5</div>
+  <h1>卒業課題</h1>
+  <p class="lead">仕様書と受け入れテストだけを頼りに作り切る総合演習。<code>cargo test -p &lt;id&gt;</code> が通れば合格です。</p>
+</section>
+<div class="grid">
+{% for f in finals %}
+  <a class="card final-card {% if f.done %}done{% endif %}" href="{{ f.href }}">
+    <div class="card-kicker">{{ f.id }} · 難易度 {{ f.stars }}</div>
+    <h3>{{ f.title }}</h3>
+    <p>使う技術: {{ f.tech }}<br><span class="muted">自動テスト: {{ f.tested }}</span></p>
+    <div class="card-foot">{% if f.done %}<span class="chip ok">✅ 合格</span>{% else %}<span class="chip">⏳ 未合格</span>{% endif %}{% if f.tui %}<span class="chip">TUI</span>{% endif %}</div>
+  </a>
+{% endfor %}
+</div>
+{% if !intro.is_empty() %}<article class="prose narrow">{{ intro|safe }}</article>{% endif %}
+{% endblock %}

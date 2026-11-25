@@ -1,0 +1,23 @@
+<section class="tool-panel" id="tools" data-project="{{ proj.id }}">
+  <h2>🧰 ビルド / テスト / 実行</h2>
+  <div class="tool-rows">
+    <div class="tool-row"><b>自分の版 (starter)</b>
+      <button class="btn tiny" data-cargo="/api/cargo/starter/{{ proj.id }}/build">▶ ビルド</button>
+      <button class="btn tiny" data-cargo="/api/cargo/starter/{{ proj.id }}/test">▶ テスト</button>
+      <a class="btn tiny primary" href="/terminal?cmd={{ "cargo run -p "|urlencode }}{{ proj.id|urlencode }}_starter">▶ ターミナルで実行</a>
+    </div>
+    <div class="tool-row"><b>完成版</b>
+      <button class="btn tiny" data-cargo="/api/cargo/project/{{ proj.id }}/build">▶ ビルド</button>
+      <button class="btn tiny" data-cargo="/api/cargo/project/{{ proj.id }}/test">▶ テスト</button>
+      <a class="btn tiny primary" href="/terminal?cmd={{ run|urlencode }}">▶ ターミナルで実行</a>
+      <button class="btn tiny ghost" data-copy="{{ run }}">コマンドをコピー</button>
+    </div>
+  </div>
+  <pre class="output small" id="output" hidden></pre>
+  {% if !starter_files.is_empty() %}
+  <details class="file-editor-box">
+    <summary>✏️ starter をブラウザで編集</summary>
+    <div class="file-editor" data-files="{% for f in starter_files %}{{ f }}{% if !loop.last %},{% endif %}{% endfor %}"></div>
+  </details>
+  {% endif %}
+</section>
